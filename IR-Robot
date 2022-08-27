@@ -1,3 +1,6 @@
+                                                       //  This code is working with STM32F103C8T6  //
+
+
 #include <AFMotor.h> 
 #include <IRremote.h>
 
