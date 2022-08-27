@@ -1,0 +1,80 @@
+
+
+                                                    //  Latest commit 7e84d39 on 13 May 2021  //
+
+
+
+#include <Servo.h>
+
+Servo SERVO_1;      
+Servo SERVO_2;
+Servo SERVO_3;
+Servo SERVO_4;
+
+
+
+int SERVO_1_POS = 0; 
+int SERVO_2_POS = 90;     // Servolarımızın başlangıç pozisyonlarını belirledik.
+int SERVO_3_POS = 90;
+int SERVO_4_POS = 70;
+
+
+
+int JOY_1_X = A1;
+int JOY_1_Y = A2;        // Joystick-Pin tanımlamalarını yaptık.
+int JOY_2_X = A3; 
+int JOY_2_Y = A4;
+
+int JOY_1_X_VAL = 0;
+int JOY_1_Y_VAL = 0;     // Joysticklerden okunacak değer için değişkenler tanımladık.
+int JOY_2_X_VAL = 0;
+int JOY_2_Y_VAL = 0;
+
+
+int SERVO_3_PIN = 3; // KULE
+int SERVO_1_PIN = 4; // KEPÇE          // Servolarımızın pin tanımlamalarını yaptık.
+int SERVO_4_PIN = 5; // YARDIMCI KOL
+int SERVO_2_PIN = 6; // Ana Kol 
+
+
+
+void setup() 
+{
+ pinMode(SERVO_1_PIN, OUTPUT);
+SERVO_1.attach(SERVO_1_PIN);
+
+   pinMode(SERVO_2_PIN, OUTPUT);
+   SERVO_2.attach(SERVO_2_PIN);
+                                       // Servolarımızın bağlı olduğu pinleri çıkış olarak tanımladık ve Servolarımızı belirtilen pinlerde aktif ettik.
+ pinMode(SERVO_3_PIN, OUTPUT);
+  SERVO_3.attach(SERVO_3_PIN);
+
+  pinMode(SERVO_4_PIN, OUTPUT);
+  SERVO_4.attach(SERVO_4_PIN);
+}
+
+void loop() 
+{
+ JOY_1_X_VAL = (analogRead(JOY_1_X) - 512) / 400;
+JOY_1_Y_VAL = (analogRead(JOY_1_Y) - 512) /  400;     // Joystick hassasiyet ayarlarını yaptık.
+ JOY_2_X_VAL = (analogRead(JOY_2_X) - 512) / 400;
+  JOY_2_Y_VAL = (analogRead(JOY_2_Y) - 512) /400;
+
+
+
+SERVO_1_POS = constrain((SERVO_1_POS + JOY_2_X_VAL), 0, 40);
+SERVO_2_POS = constrain((SERVO_2_POS + JOY_2_Y_VAL), 1, 150);     // Servo pozisyonlarını son haline getirerek, maks. ve min. açılarını belirledik.
+ SERVO_3_POS = constrain((SERVO_3_POS + JOY_1_X_VAL), 30, 120);
+ SERVO_4_POS = constrain((SERVO_4_POS + JOY_1_Y_VAL), 20, 90);
+
+
+
+
+  SERVO_1.write(SERVO_1_POS);
+  SERVO_2.write(SERVO_2_POS);   
+  SERVO_3.write(SERVO_3_POS);
+  SERVO_4.write(SERVO_4_POS);
+
+        delay(20);
+
+}
